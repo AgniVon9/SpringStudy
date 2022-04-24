@@ -1,12 +1,12 @@
-package ontrollers;
+package com.example.springstudy.ontroller;
 
-import domain.Message;
+import com.example.springstudy.domain.Message;
+import com.example.springstudy.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import repos.MessageRepo;
 
 import java.util.Map;
 
@@ -15,7 +15,7 @@ public class MainController {
     @Autowired
     private MessageRepo messageRepo;
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String greeting(
             @RequestParam(name="name", required=false, defaultValue="World") String name,
             Map<String, Object> model
@@ -24,7 +24,7 @@ public class MainController {
         return "home";
     }
 
-    @GetMapping
+    @GetMapping("/main")
     public String main(Map<String, Object> model) {
         Iterable<Message> messages = messageRepo.findAll();
 
@@ -32,8 +32,7 @@ public class MainController {
 
         return "main";
     }
-
-    @PostMapping
+    @PostMapping("/main")
     public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
         Message message = new Message(text, tag);
 
